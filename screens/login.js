@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -13,10 +13,9 @@ const getFonts = () => Font.loadAsync({
 export default function Login({ navigation }) {
 
   const image = require('../assets/logo.png');
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
@@ -32,79 +31,69 @@ export default function Login({ navigation }) {
     navigation.navigate('Register');
   }
 
-  if(fontsLoaded){
-    return (
-      <View style={styles.container}>
-        <View style={styles.container1}>
-          <Image source={image} style={{ height: 100, width: 100 }} />
-          <Text style={styles.text1}>
-            FOCUSED
-          </Text>
-        </View>
-
-        <View style={styles.container2}>
-          <Text style={styles.text2}>
-            Sign in
-          </Text>
-          <View style={styles.container3}>  
-            <TextInput
-              placeholder='example@gmai.com'
-              keyboardType='email-address'
-              inputType='email'
-              value={email}
-              onChange={setEmail}
-              style={styles.input} 
-            />
-          </View>
-
-          <View style={styles.container3}>
-            <TextInput 
-              placeholder='Your Password' 
-              secureTextEntry={!showPassword}
-              value={password}
-              onChange={setPassword}
-              style={styles.input} 
-            />
-            <TouchableOpacity
-              style={styles.icon}
-              onPress={() => setShowPassword(!showPassword)}
-            >
-            <MaterialIcons
-              name={showPassword ? 'visibility' : 'visibility-off'}
-              size={20}
-              color="gray"
-            />
-            </TouchableOpacity>
-          </View>
-          <View  style={styles.container3}>
-            <Text style={styles.text3}>
-              Don't have an account?
-            </Text> 
-            <Pressable style={styles.link} onPress={register}>
-              <Text style={styles.register}> Register here </Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.container4}>
-            <Pressable style={styles.button}
-              onPress={handelSubmit}>
-              <Text style={styles.buttonText}>SIGN IN</Text>
-            </Pressable>
-          </View>
-        </View>
-
-        <StatusBar style="auto" />
+  return (
+    <View style={styles.container}>
+      <View style={styles.container1}>
+        <Image source={image} style={{ height: 100, width: 100 }} />
+        <Text style={styles.text1}>
+          FOCUSED
+        </Text>
       </View>
-    );
-  } else {
-    return (
-      <AppLoading
-        startAsync={getFonts}
-        onFinish={() => setFontsLoaded(true)}
-        onError={console.warn} // Added error handling
-      />
-    );
-  }
+
+      <View style={styles.container2}>
+        <Text style={styles.text2}>
+          Sign in
+        </Text>
+        <View style={styles.container3}>  
+          <TextInput
+            placeholder='example@gmai.com'
+            keyboardType='email-address'
+            inputType='email'
+            value={email}
+            onChange={setEmail}
+            style={styles.input} 
+          />
+        </View>
+
+        <View style={styles.container3}>
+          <TextInput 
+            placeholder='Your Password' 
+            secureTextEntry={!showPassword}
+            value={password}
+            onChange={setPassword}
+            style={styles.input} 
+          />
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+          <MaterialIcons
+            name={showPassword ? 'visibility' : 'visibility-off'}
+            size={20}
+            color="gray"
+          />
+          </TouchableOpacity>
+        </View>
+        <View  style={styles.container3}>
+          <Text style={styles.text3}>
+            Don't have an account?
+          </Text> 
+          <Pressable style={styles.link} onPress={register}>
+            <Text style={styles.register}> Register here </Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.container4}>
+          <Pressable style={styles.button}
+            onPress={handelSubmit}>
+            <Text style={styles.buttonText}>SIGN IN</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* <StatusBar style="auto" /> */}
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {
