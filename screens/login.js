@@ -10,7 +10,7 @@ const getFonts = () => Font.loadAsync({
   'PlayfairDisplay-Bold': require('../assets/fonts/PlayfairDisplay-Bold.ttf'),
 });
 
-export default function Login() {
+export default function Login({ navigation }) {
 
   const image = require('../assets/logo.png');
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -22,12 +22,14 @@ export default function Login() {
   
   const handelSubmit = () => {
     if (email && password) {
-      return(
-        Alert.alert('Submitted!')
-      );
+      navigation.navigate('Profile');
     } else {
-      Alert.alert('Error!')
+      Alert.alert('You must enter your email and password!')
     }
+  }
+
+  const register = () => {
+    navigation.navigate('Register');
   }
 
   if(fontsLoaded){
@@ -74,11 +76,19 @@ export default function Login() {
             />
             </TouchableOpacity>
           </View>
+          <View  style={styles.container3}>
+            <Text style={styles.text3}>
+              Don't have an account?
+            </Text> 
+            <Pressable style={styles.link} onPress={register}>
+              <Text style={styles.register}> Register here </Text>
+            </Pressable>
+          </View>
 
           <View style={styles.container4}>
             <Pressable style={styles.button}
               onPress={handelSubmit}>
-              <Text style={styles.buttonText}>Sign In</Text>
+              <Text style={styles.buttonText}>SIGN IN</Text>
             </Pressable>
           </View>
         </View>
@@ -114,27 +124,19 @@ const styles = StyleSheet.create({
 
   container3: {
     flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-
-  container4: {
-    alignItems: 'center'
   },
 
   text1: {
     color: 'darkblue',
     fontSize: 30, // Added font size for better visibility
     marginTop: 10, // Space between image and text
-    fontFamily: 'PlayfairDisplay-Regular', // Corrected font family name
   },
 
   text2: {
     color: 'darkblue',
     fontSize: 18, // Added font size for better visibility
     marginBottom: 10, // Space between image and text
-    // marginLeft: 8,
-    fontFamily: 'PlayfairDisplay-Regular', // Corrected font family name
+    fontWeight: 'bold'
   },
 
   input: {
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'lightgray',
     borderWidth: 1,
-    fontFamily: 'PlayfairDisplay-Regular', // Corrected font family name
+    // fontFamily: 'PlayfairDisplay-Regular', // Corrected font family name
   },
 
   icon: {
@@ -153,17 +155,11 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 
-  sign: {
-    backgroundColorcolor:'darkblue',
-    fontFamily: 'PlayfairDisplay-Regular',
-    borderRadius: 10,
-  },
-
   buttonText: {
     color: 'white',
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
     fontSize:17,
-    fontFamily: 'PlayfairDisplay-Regular',
+    // fontFamily: 'PlayfairDisplay-Regular',
 
   },
 
@@ -174,5 +170,19 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'darkblue',
     borderRadius: 10
+  },
+
+  link: {
+    borderBottomColor: 'blue',
+    borderBottomWidth: 1,
+    marginBottom: 7,
+  },
+
+  text3: {
+    marginBottom: 7,
+  },
+
+  register:{
+    color: 'blue',
   }
 });
