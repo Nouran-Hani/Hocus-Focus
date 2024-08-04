@@ -6,19 +6,23 @@ import Register from '../screens/register';
 import Welcome from '../screens/welcomePage';
 import ProfileDetails from '../screens/profileDetails';
 import Analysis from '../screens/analysis';
+import Timer from '../screens/timer';
+import Start from '../screens/startTimer'
 
 const Stack = createStackNavigator();
 
 function BaseStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Profile">
+      <Stack.Navigator initialRouteName="Timer">
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="ProfileDetails" component={ProfileDetails}/>
         <Stack.Screen name="Analysis" component={Analysis}/>
+        <Stack.Screen name="Timer" component={Timer} />
+        <Stack.Screen name="Start" component={Start} />
       </Stack.Navigator>
     </NavigationContainer>
   );

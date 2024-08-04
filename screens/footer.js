@@ -18,6 +18,10 @@ export default function Footer({ navigation }){
         navigation.navigate('Analysis')
     }
 
+    const timer = () => {
+        navigation.navigate('Timer')
+    }
+
     return (
         <View style={styles.footer}>
             <View>
@@ -29,6 +33,12 @@ export default function Footer({ navigation }){
             <View>
                 <Pressable onPress={analysis}>
                     <MaterialCommunityIcons name="google-analytics" size={30} style={styles.icon} />
+                </Pressable>
+            </View>
+
+            <View>
+                <Pressable onPress={timer}>
+                    <Ionicons name="timer-outline" size={30} style={styles.icon}/>
                 </Pressable>
             </View>
 
@@ -54,7 +64,7 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        paddingRight: '35%',
+        paddingRight: '20%',
         color: "darkblue", 
     }
 });
