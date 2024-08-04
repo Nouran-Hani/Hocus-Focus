@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable, StatusBar } from 'react-native';
+import React, { useState, useEffect } from 'react';
 
 export default function Timer({ navigation }){
 
@@ -18,7 +18,7 @@ export default function Timer({ navigation }){
 
             <TouchableOpacity 
             style={styles.touch}
-            onPress={() => press('00:30:00')}>
+            onPress={() => press('00:00:05')}>
                 <Text style={styles.buttonText}>
                     00:30:00
                 </Text>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         fontSize: 35,
         fontWeight: 'bold',
         color: '#25204f',
-        marginTop: '10%',
+        marginTop: '35%',
         marginBottom: '35%',
     }
 })

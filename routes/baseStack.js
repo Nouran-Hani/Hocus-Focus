@@ -21,8 +21,8 @@ function BaseStack() {
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="ProfileDetails" component={ProfileDetails}/>
         <Stack.Screen name="Analysis" component={Analysis}/>
-        <Stack.Screen name="Timer" component={Timer} />
-        <Stack.Screen name="Start" component={Start} />
+        <Stack.Screen name="Timer" component={Timer} options={{ headerShown: false }} />
+        <Stack.Screen name="Start" component={Start} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

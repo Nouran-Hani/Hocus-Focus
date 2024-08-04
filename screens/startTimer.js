@@ -1,7 +1,11 @@
-import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable, StatusBar } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-export default function Start({ route }){
+export default function Start({ route, navigation }){
+
+    useEffect(() => {
+        StatusBar.setBarStyle('light-content'); // Set text and icon color to light
+    }, []);
 
     const { timer } = route.params; // Assume timer is passed as "HH:MM:SS"
 
@@ -13,7 +17,9 @@ export default function Start({ route }){
   
     useEffect(() => {
       if (timeLeft === 0) {
-        Alert.alert('Finished');
+        // Alert.alert('Finished');
+        StatusBar.setBarStyle('dark-content');
+        navigation.navigate('Timer')
         return;
       }
   
