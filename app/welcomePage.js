@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, StatusBar } from 'react-native';
 
 export default function Welcome({ navigation }){
 
-    const image = require('../assets/logo.png');
-    const image2 = require('../assets/logo2.png');
+    StatusBar.setBarStyle('dark-content');
+
+    const image = require('../assets/images/logo.png');
+    const image2 = require('../assets/images/logo2.png');
 
     const register = () => {
-        navigation.navigate('Register')
+        navigation.navigate('register')
     }
 
     const login = () => {
-        navigation.navigate('Login')
+        navigation.navigate('login')
     }
 
     return (
@@ -21,14 +23,6 @@ export default function Welcome({ navigation }){
                     FOCUSED
                 </Text>
             </View>
-            
-            {/* <View style={styles.container2}>
-                <Text style={styles.welcome}>
-                    Welcome to FUCOSED, the application that will change your accademic life.
-                    {'\n'} {'\n'} {'\n'} {'\n'}
-                    Join us to enjoy the journy!
-                </Text>
-            </View> */}
 
             <View style={styles.container3}>
                 <Pressable style={styles.button}

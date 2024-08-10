@@ -1,13 +1,17 @@
-import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable, StatusBar } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import Footer from './footer'
 
 export default function Timer({ navigation }){
+
+    StatusBar.setBarStyle('dark-content');
 
     const [time, setTime] = useState('');
 
     const press = (timeValue) => {
         setTime(timeValue)
-        navigation.navigate('Start', { timer: timeValue });
+        StatusBar.setBarStyle('light-content');
+        navigation.navigate('start', { timer: timeValue });
     }
 
     return (
@@ -18,7 +22,7 @@ export default function Timer({ navigation }){
 
             <TouchableOpacity 
             style={styles.touch}
-            onPress={() => press('00:00:05')}>
+            onPress={() => press('00:30:00')}>
                 <Text style={styles.buttonText}>
                     00:30:00
                 </Text>
@@ -39,6 +43,8 @@ export default function Timer({ navigation }){
                     01:30:00
                 </Text>
             </TouchableOpacity>
+
+            <Footer navigation={navigation} />
         </View>
     );
 }

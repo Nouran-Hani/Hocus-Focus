@@ -1,18 +1,10 @@
-// import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import AppLoading from 'expo-app-loading'; // Correct import
-import * as Font from 'expo-font';
-
-const getFonts = () => Font.loadAsync({
-  'PlayfairDisplay-Regular': require('../assets/fonts/PlayfairDisplay-Regular.ttf'),
-  'PlayfairDisplay-Bold': require('../assets/fonts/PlayfairDisplay-Bold.ttf'),
-});
 
 export default function Login({ navigation }) {
 
-  const image = require('../assets/logo.png');
+  const image = require('../assets/images/logo.png');
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,14 +13,14 @@ export default function Login({ navigation }) {
   
   const handelSubmit = () => {
     if (email && password) {
-      navigation.navigate('Profile');
+      navigation.navigate('profile');
     } else {
       Alert.alert('You must enter your email and password!')
     }
   }
 
   const register = () => {
-    navigation.navigate('Register');
+    navigation.navigate('register');
   }
 
   return (

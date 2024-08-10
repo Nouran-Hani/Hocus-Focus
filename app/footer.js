@@ -7,19 +7,19 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 export default function Footer({ navigation }){
 
     const details = () => {
-        navigation.navigate('ProfileDetails')
+        navigation.navigate('profileDetails')
     }
 
     const home = () => {
-        navigation.navigate('Profile')
+        navigation.navigate('profile')
     }
 
     const analysis = () => {
-        navigation.navigate('Analysis')
+        navigation.navigate('analysis')
     }
 
     const timer = () => {
-        navigation.navigate('Timer')
+        navigation.navigate('timer')
     }
 
     return (

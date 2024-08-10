@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Register({ navigation }){
 
-    const image = require('../assets/logo.png');
+    const image = require('../assets/images/logo.png');
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,14 +14,14 @@ export default function Register({ navigation }){
 
     const handelSubmit = () => {
         if (name && email && password && conf) {
-          navigation.navigate('Profile');
+          navigation.navigate('profile');
         } else {
           Alert.alert('All fields are required!')
         }
       }
 
     const login = () => {
-        navigation.navigate('Login')
+        navigation.navigate('login')
     }
 
     return (

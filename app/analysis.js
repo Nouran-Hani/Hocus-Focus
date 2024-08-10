@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Footer from './footer'
 
 export default function Analysis({ navigation }){

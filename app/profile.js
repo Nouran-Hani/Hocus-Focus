@@ -5,7 +5,7 @@ import Footer from './footer'
 export default function Pofile({ navigation }){
     
     const details = () => {
-        navigation.navigate('ProfileDetails')
+        navigation.navigate('profileDetails')
     }
 
     return (
