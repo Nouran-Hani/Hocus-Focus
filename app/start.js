@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, Button } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Button, Pressable } from 'react-native';
 import { Camera, CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from 'expo-camera/build/legacy/Camera.types';
 
@@ -41,17 +41,21 @@ export default function Start({ route, navigation }) {
     if (!permission.granted) {
         return (
             <View style={styles.container}>
-                <Text style={styles.message}>We need your permission to show the camera</Text>
-                <Button onPress={requestPermission} title="Grant Permission" />
+                <Text style={styles.message}>** We need your permission to show the camera</Text>
+                <Pressable onPress={requestPermission} style={styles.touch}>
+                    <Text style={styles.buttonText}> Grant Permission</Text>
+                </Pressable>
             </View>
         );
     }
 
     return (
         <View style={styles.container}>
-            <CameraView style={styles.camera} facing={facing} /> 
+            <View style={styles.cameraborder}>
+                <CameraView style={styles.camera} facing={facing} /> 
+            </View>
 
-                <View style={styles.row}>
+            <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
                 <Text style={styles.timer}>{minutes}</Text>
                 <Text style={styles.timer}>{seconds}</Text>
@@ -84,21 +88,39 @@ const styles = StyleSheet.create({
     },
     
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#25204f',
     },
 
     touch: {
         backgroundColor: '#cce3f0',
-        padding: 15,
+        padding: 10,
         borderRadius: 20,
         margin: 15,
     },
 
     camera: {
-        height: 250,
+        height: 300,
         width: 250,
+        // borderRadius: 20,
+    },
+
+    cameraborder:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 350,
+        width: 300,
+        backgroundColor: '#cce3f0',
+        borderRadius: 20,
         marginBottom: 20,
+    },
+
+    message: {
+        textAlign: 'center',
+        fontSize: 24,
+        color:  "#cce3f0",
+        fontWeight: 'bold',
+        width: '90%',
     }
 });
