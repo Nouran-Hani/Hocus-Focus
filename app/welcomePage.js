@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, Pressable, StatusBar } from 'react-native';
 
-export default function Welcome({ navigation }){
+export default function WelcomePage({ navigation }){
 
     StatusBar.setBarStyle('dark-content');
 
