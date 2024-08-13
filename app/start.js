@@ -4,6 +4,7 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from 'expo-camera/build/legacy/Camera.types';
 
 export default function Start({ route, navigation }) {
+    StatusBar.setBarStyle('light-content');
     // Initialize hooks
     const [permission, requestPermission] = useCameraPermissions();
     const [visability, setVisability] = useState(true)
@@ -62,7 +63,7 @@ export default function Start({ route, navigation }) {
                     <CameraView style={styles.camera} facing={facing} /> 
                     <View style={styles.row}>
                         <Text style={styles.cameraText}>
-                            Visability
+                            Camera
                         </Text>
                         <Switch
                             style={styles.switch}
@@ -79,7 +80,7 @@ export default function Start({ route, navigation }) {
                     <CameraView style={styles.cameraVanish} facing={facing} /> 
                     <View style={styles.row}>
                         <Text style={styles.cameraText}>
-                            Visability
+                            Camera
                         </Text>
                         <Switch
                             style={styles.switch}
@@ -116,14 +117,18 @@ const styles = StyleSheet.create({
     },
 
     timer: {
+        textAlign: 'center',
+        textAlignVertical: 'center',
         fontSize: 64,
         color: '#cce3f0',
         fontWeight: 'bold',
         borderWidth: 2,
         borderColor: '#cce3f0',
-        padding: 10,
+        // padding: 10,
         borderRadius: 10,
         margin: 5,
+        height: 95,
+        width: 95,
     },
     
     buttonText: {
@@ -188,5 +193,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         width: 65,
         marginTop: 13,
+        fontWeight: 'bold',
     }
 });
