@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, Button, Pressable } from 'react-native';
-import { Camera, CameraView, useCameraPermissions } from 'expo-camera';
+import { StyleSheet, Text, View, StatusBar, Switch, Pressable } from 'react-native';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { CameraType } from 'expo-camera/build/legacy/Camera.types';
 
 export default function Start({ route, navigation }) {
     // Initialize hooks
     const [permission, requestPermission] = useCameraPermissions();
+    const [visability, setVisability] = useState(true)
     const facing = CameraType.front
+
+    const toggleSwitch = () => {
+        setVisability(previousState => !previousState);
+    };
 
     // Timer setup
     const { timer } = route.params; // Expecting timer to be passed in "HH:MM:SS" format
@@ -51,10 +56,44 @@ export default function Start({ route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.cameraborder}>
-                <CameraView style={styles.camera} facing={facing} /> 
-            </View>
 
+            {visability? (
+                <View style={styles.cameraborder}>
+                    <CameraView style={styles.camera} facing={facing} /> 
+                    <View style={styles.row}>
+                        <Text style={styles.cameraText}>
+                            Visability
+                        </Text>
+                        <Switch
+                            style={styles.switch}
+                            trackColor={{false: '#767577', true: '#4f80d1'}}
+                            thumbColor={visability ? '#a4c5fc' : '#acaaad'}
+                            // ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={visability}
+                        />
+                    </View>
+                </View>
+            ) : (
+                <View style={styles.vanish}>
+                    <CameraView style={styles.cameraVanish} facing={facing} /> 
+                    <View style={styles.row}>
+                        <Text style={styles.cameraText}>
+                            Visability
+                        </Text>
+                        <Switch
+                            style={styles.switch}
+                            trackColor={{false: '#767577', true: '#4f80d1'}}
+                            thumbColor={visability ? '#a4c5fc' : '#acaaad'}
+                            // ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={visability}
+                        />
+                    </View>
+                </View>
+                )
+            }
+            
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
                 <Text style={styles.timer}>{minutes}</Text>
@@ -103,16 +142,31 @@ const styles = StyleSheet.create({
     camera: {
         height: 300,
         width: 250,
-        // borderRadius: 20,
+        marginTop: 20,
+    },
+
+    cameraVanish: {
+        height: 0,
+        width: 0,
     },
 
     cameraborder:{
         alignItems: 'center',
         justifyContent: 'center',
-        height: 350,
+        height: 370,
         width: 300,
         backgroundColor: '#cce3f0',
         borderRadius: 20,
+        marginBottom: 20,
+    },
+
+    vanish: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 50,
+        width: 150,
+        backgroundColor: '#cce3f0',
+        borderRadius: 15,
         marginBottom: 20,
     },
 
@@ -122,5 +176,17 @@ const styles = StyleSheet.create({
         color:  "#cce3f0",
         fontWeight: 'bold',
         width: '90%',
+    },
+
+    switch: {
+        // marginLeft: 'auto',
+        // marginRight: 25,
+    },
+
+    cameraText: {
+        color: '#25204f',
+        fontSize: 14,
+        width: 65,
+        marginTop: 13,
     }
 });

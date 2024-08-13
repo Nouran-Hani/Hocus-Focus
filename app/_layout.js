@@ -5,7 +5,6 @@ import Welcome from './welcomePage';
 import Login from './login';
 import Register from './register';
 import Profile from './profile';
-import Footer from './footer';
 import Analysis from './analysis';
 import ProfileDetails from './profileDetails';
 
@@ -13,7 +12,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-      <Stack.Navigator initialRouteName="welcomePage">
+      <Stack.Navigator initialRouteName="timer">
         <Stack.Screen name="welcomePage" component={Welcome} options={{ headerShown: false }} />
         <Stack.Screen name="login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="register" component={Register} options={{ headerShown: false }} />

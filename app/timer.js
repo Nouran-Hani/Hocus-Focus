@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
 import Footer from './footer'
 
@@ -15,41 +15,48 @@ export default function Timer({ navigation }){
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.select}>
-                Select a timer
-            </Text>
-
-            <TouchableOpacity 
-            style={styles.touch}
-            onPress={() => press('00:30:00')}>
-                <Text style={styles.buttonText}>
-                    00:30:00
+        <SafeAreaView style={styles.safeContainer}>
+            <View style={styles.container}>
+                <Text style={styles.select}>
+                    Select a timer
                 </Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity 
-            style={styles.touch}
-            onPress={() => press('01:00:00')}>
-                <Text style={styles.buttonText}>
-                    01:00:00
-                </Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.touch}
+                onPress={() => press('00:30:00')}>
+                    <Text style={styles.buttonText}>
+                        00:30:00
+                    </Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity 
-            style={styles.touch}
-            onPress={() => press('01:30:00')}>
-                <Text style={styles.buttonText}>
-                    01:30:00
-                </Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.touch}
+                onPress={() => press('01:00:00')}>
+                    <Text style={styles.buttonText}>
+                        01:00:00
+                    </Text>
+                </TouchableOpacity>
 
-            <Footer navigation={navigation} />
-        </View>
+                <TouchableOpacity 
+                style={styles.touch}
+                onPress={() => press('01:30:00')}>
+                    <Text style={styles.buttonText}>
+                        01:30:00
+                    </Text>
+                </TouchableOpacity>
+
+                {/* <Footer navigation={navigation} /> */}
+            </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    safeContainer: {
+        flex: 1,
+        backgroundColor: '#cce3f0'
+    },
+
     container: {
         flex: 1,
         alignItems: 'center',
