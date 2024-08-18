@@ -38,15 +38,19 @@ export default function Welcome({ navigation }){
 
     useEffect(() => {
         progress.value = withSpring(1, {}, () => {
-            translateY.value = withTiming(-200, {duration: 1000}, () => {
+            translateY.value = withTiming(-100, {duration: 1000}, () => {
                 contentProgress.value = withTiming(1, { duration: 1000})
             });
         });
         scale.value = withSpring(1);
     }, []);
 
-    const select = () => {
+    const selectTime = () => {
         navigation.navigate('timer')
+    }
+
+    const sensor = () => {
+        navigation.navigate('sensors')
     }
 
     return (
@@ -61,10 +65,15 @@ export default function Welcome({ navigation }){
             </Animated.Text>
 
             <Animated.View style={content}>
-                <TouchableOpacity style={styles.button}
-                onPress={select}>
-                    <Text style={styles.buttonText}>Start</Text>
-                </TouchableOpacity>
+                <View style={styles.row}>
+                    <TouchableOpacity style={styles.button} onPress={selectTime}>
+                        <Text style={styles.buttonText}>Start a timer</Text>
+                    </TouchableOpacity>
+{/* 
+                    <TouchableOpacity style={styles.button} onPress={sensor}>
+                        <Text style={styles.buttonText}>Keep the phone away</Text>
+                    </TouchableOpacity> */}
+                </View>
             </Animated.View>
         </View>
     );
@@ -88,15 +97,20 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#25204f',
         borderRadius: 15,
-        width: 100,
+        width: 250,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 20,
     },
 
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         color: '#fff',
         fontWeight: 'bold',
+    },
+
+    row: {
+        // flexDirection: 'row',
     }
 })

@@ -1,17 +1,16 @@
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
-import Footer from './footer'
 
-export default function Timer({ navigation }){
+export default function Feedback({ route, navigation }){
 
     StatusBar.setBarStyle('dark-content');
 
-    const [time, setTime] = useState('');
+    const { feed } = route.params;
+    const { initial } = route.params;
+    const final = feed/initial * 100
 
-    const press = (timeValue) => {
-        setTime(timeValue)
-        StatusBar.setBarStyle('light-content');
-        navigation.navigate('start', { timer: timeValue });
+    const press = () => { 
+        navigation.navigate('timer');
     }
 
     return (
@@ -19,34 +18,19 @@ export default function Timer({ navigation }){
             <SafeAreaView style={{backgroundColor: '#25204f'}}/>
             <View style={styles.container}>
                 <Text style={styles.select}>
-                    Select a timer
+                    Session Feedback
+                </Text>
+                <Text style={styles.select2}>
+                    You were {final}% focused {feed} {initial}
                 </Text>
 
                 <TouchableOpacity 
                 style={styles.touch}
-                onPress={() => press('00:00:50')}>
+                onPress={() => press()}>
                     <Text style={styles.buttonText}>
-                        00:00:50
+                        start new timer
                     </Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity 
-                style={styles.touch}
-                onPress={() => press('01:00:00')}>
-                    <Text style={styles.buttonText}>
-                        01:00:00
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                style={styles.touch}
-                onPress={() => press('01:30:00')}>
-                    <Text style={styles.buttonText}>
-                        01:30:00
-                    </Text>
-                </TouchableOpacity>
-
-                {/* <Footer navigation={navigation} /> */}
             </View>
         </SafeAreaView>
     );
@@ -83,5 +67,14 @@ const styles = StyleSheet.create({
         color: '#25204f',
         marginTop: '35%',
         marginBottom: '35%',
+    },
+
+    select2: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#25204f',
+        marginTop: '15%',
+        marginBottom: '30%',
+        textAlign: 'center'
     }
 })
