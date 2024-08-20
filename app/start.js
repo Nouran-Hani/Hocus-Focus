@@ -51,14 +51,14 @@ export default function Start({ route, navigation }) {
         const intervalId = setInterval(() => {
             if (cameraRef) { // Ensure cameraRef is set before capturing
                 handleCapture();
-                console.log('cameraRef is on');
+                // console.log('cameraRef is on');
             }
         }, 5000); // Trigger every 5 seconds
     
         // Clean up interval on component unmount or when cameraRef changes
         return () => {
             clearInterval(intervalId);
-            console.log('Interval cleared');
+            // console.log('Interval cleared');
         };
     }, [cameraRef]); // Depend on cameraRef so it re-runs if cameraRef changes
 
@@ -75,7 +75,7 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('http://192.168.1.7:8080/video', formData, {
+                const response = await axios.post('http://192.168.1.7:5001/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
