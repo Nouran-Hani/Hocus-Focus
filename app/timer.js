@@ -24,9 +24,9 @@ export default function Timer({ navigation }){
 
                 <TouchableOpacity 
                 style={styles.touch}
-                onPress={() => press('00:00:50')}>
+                onPress={() => press('00:00:30')}>
                     <Text style={styles.buttonText}>
-                        00:00:50
+                        00:00:30
                     </Text>
                 </TouchableOpacity>
 

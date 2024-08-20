@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 
 export default function Feedback({ route, navigation }){
 
-    StatusBar.setBarStyle('dark-content');
-
     const { feed } = route.params;
     const { initial } = route.params;
     const final = feed/initial * 100
@@ -16,12 +14,13 @@ export default function Feedback({ route, navigation }){
     return (
         <SafeAreaView style={styles.safeContainer}>
             <SafeAreaView style={{backgroundColor: '#25204f'}}/>
+            <StatusBar style={{setBarStyle:'dark-content'}}/>  
             <View style={styles.container}>
                 <Text style={styles.select}>
                     Session Feedback
                 </Text>
                 <Text style={styles.select2}>
-                    You were {final}% focused {feed} {initial}
+                    You were {final}% focused
                 </Text>
 
                 <TouchableOpacity 

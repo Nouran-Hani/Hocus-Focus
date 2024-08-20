@@ -25,12 +25,13 @@ export default function Start({ route, navigation }) {
 
     useEffect(() => {
         if (timeLeft === 0) {
-            StatusBar.setBarStyle('dark-content');
-            navigation.navigate('feedback', 
+            setCameraRef(null);
+            // console.log('final cameraRef is', cameraRef)
+            navigation.replace('feedback', 
                 {feed: feedbackTime,
                 initial: initialTimeInSeconds
             });
-            console.log(feedbackTime)
+            StatusBar.setBarStyle('dark-content');
             return;
         }
         const intervalId = setInterval(() => {
@@ -41,27 +42,29 @@ export default function Start({ route, navigation }) {
     }, [timeLeft]);
 
     useEffect(() => {
+        if (!cameraRef) {return;}
+        // Skip setting up the interval if cameraRef is not available
+        // if (timeLeft === 0) {
+        //     navigation.pop()
+        //     console.log("after pop")
+        // }
         const intervalId = setInterval(() => {
             if (cameraRef) { // Ensure cameraRef is set before capturing
                 handleCapture();
-                // console.log('effect');
+                console.log('cameraRef is on');
             }
         }, 5000); // Trigger every 5 seconds
-
-        // Clean up interval on component unmount
-        return () => clearInterval(intervalId);
-    }, [cameraRef]);
-
-    // useEffect(() => {
-    //     if (state === "Yawn" || state === "Sleep" || state === "Absent") {
-    //         setFeedbackTime(prevTime => prevTime - 5);
-    //     }
-    // }, [state]);
+    
+        // Clean up interval on component unmount or when cameraRef changes
+        return () => {
+            clearInterval(intervalId);
+            console.log('Interval cleared');
+        };
+    }, [cameraRef]); // Depend on cameraRef so it re-runs if cameraRef changes
 
     const handleCapture = async () => {
-        {
+        if (cameraRef){
             const photo = await cameraRef.takePictureAsync({ base64: true });
-            // console.log(photo.uri);
     
             // Send the captured image to your Flask backend
             const formData = new FormData();
@@ -79,17 +82,17 @@ export default function Start({ route, navigation }) {
                 });
                 setState(response.data.state);
 
-                if (response.data.state === "Yawn" ||
-                    response.data.state === "Sleep" ||
-                    response.data.state === "Absent")
+                if (response.data.state === "disengaged")
                     {
-                    setFeedbackTime(prevTime => prevTime - 5);
+                    setFeedbackTime(feedbackTime => feedbackTime - 5);
                 }
-    
+                console.log(response.data.state)
             } catch (error) {
                 console.log(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
+        } else {
+            console.log('Camera is not available or has been stopped.');
         }
     };
     
