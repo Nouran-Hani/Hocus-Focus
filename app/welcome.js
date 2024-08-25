@@ -50,6 +50,7 @@ export default function Welcome({ navigation }){
     }
 
     const sensor = () => {
+        StatusBar.setBarStyle('light-content');
         navigation.navigate('sensors')
     }
 
@@ -67,12 +68,12 @@ export default function Welcome({ navigation }){
             <Animated.View style={content}>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.button} onPress={selectTime}>
-                        <Text style={styles.buttonText}>Start a timer</Text>
+                        <Text style={styles.buttonText}>Focus Tracker</Text>
                     </TouchableOpacity>
-{/* 
+
                     <TouchableOpacity style={styles.button} onPress={sensor}>
                         <Text style={styles.buttonText}>Keep the phone away</Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </View>
             </Animated.View>
         </View>

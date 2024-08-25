@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Vibration, StatusBar } from 'react-native';
 import { Gyroscope, Accelerometer } from 'expo-sensors';
 
-export default function SensorData() {
+export default function SensorData({ navigation }) {
+
+  const initialTime = 10
+
+  const [showLeaveMessage, setShowLeaveMessage] = useState(false);
+  const [feedbackTime, setFeedbackTime] = useState(initialTime);
   // State for accelerometer data
   const [accelData, setAccelData] = useState({
     x: 0,
@@ -16,6 +21,26 @@ export default function SensorData() {
     y: 0,
     z: 0,
   });
+
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+
+    useEffect(() => {
+        if (timeLeft === 0) {
+            // console.log('final cameraRef is', cameraRef)
+            navigation.replace('feedback', 
+                {feed: feedbackTime,
+                initial: initialTime
+            });
+            StatusBar.setBarStyle('dark-content');
+            return;
+        }
+        const intervalId = setInterval(() => {
+            setTimeLeft(prevTime => prevTime - 1);
+        }, 1000);
+
+        return () => clearInterval(intervalId); // Cleanup interval on unmount or when timeLeft changes
+    }, [timeLeft]);
+
 
   useEffect(() => {
     // Subscribe to accelerometer updates
@@ -39,18 +64,52 @@ export default function SensorData() {
     };
   }, []);
 
+  useEffect(() => {
+    // Check the condition to show "Leave your phone"
+    if (Math.abs(gyroData.x) > 0.5 || Math.abs(gyroData.y) > 0.5 || Math.abs(gyroData.z) > 0.5) {
+      setShowLeaveMessage(true);
+      setFeedbackTime(feedbackTime => feedbackTime - 1);
+
+      // Set a timeout to hide the message after 5 seconds
+      const timer = setTimeout(() => {
+        setShowLeaveMessage(false);
+      }, 5000); // 5000 milliseconds = 5 seconds
+
+      // Clean up the timeout if the component unmounts or if the condition changes
+      return () => clearTimeout(timer);
+    } else {
+      setShowLeaveMessage(false);
+    }
+  }, [gyroData]); // Depend on gyroData to re-evaluate the condition
+
+
+  // Format time left for display
+  const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
+  const minutes = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
+  const seconds = (timeLeft % 60).toString().padStart(2, '0');
+
+  // Vibration 
+  const handlePress = () => {
+    // Trigger vibration
+    Vibration.vibrate(500); // Vibrate for 500 milliseconds
+  };
+
+  useEffect(() => {
+    if (showLeaveMessage) {
+      handlePress(); // Call handlePress when the condition is met
+    }
+  }, [showLeaveMessage]);
+
   return (
     <View style={styles.container}>
-      <Text>Accelerometer:</Text>
-      <Text>x: {accelData.x.toFixed(3)}</Text>
-      <Text>y: {accelData.y.toFixed(3)}</Text>
-      <Text>z: {accelData.z.toFixed(3)}</Text>
-      <Text></Text>
-      <Text></Text>
-      <Text>Gyroscope:</Text>
-      <Text>x: {gyroData.x.toFixed(3)}</Text>
-      <Text>y: {gyroData.y.toFixed(3)}</Text>
-      <Text>z: {gyroData.z.toFixed(3)}</Text>
+      <View style={styles.row}>
+        <Text style={styles.timer}>{hours}</Text>
+        <Text style={styles.timer}>{minutes}</Text>
+        <Text style={styles.timer}>{seconds}</Text>
+      </View>
+      {showLeaveMessage ? 
+      (<Text style={styles.text}> Leave your phone </Text>)
+      : (<Text style={styles.text}>Good Luck</Text>)}
     </View>
   );
 }
@@ -60,6 +119,46 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center', // Horizontal center
       justifyContent: 'center',
-      backgroundColor: '#cce3f0',
+      backgroundColor: '#25204f',
     },
+
+    text: {
+      fontSize: 30,
+      color: '#cce3f0',
+      fontWeight: 'bold',
+      marginTop: '5%',
+    },
+
+    row: {
+      flexDirection: 'row',
+    },
+
+    timer: {
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      fontSize: 64,
+      color: '#cce3f0',
+      fontWeight: 'bold',
+      borderWidth: 2,
+      borderColor: '#cce3f0',
+      borderRadius: 10,
+      margin: 5,
+      height: 95,
+      width: 95,
+      marginTop: '30%',
+      marginBottom: '10%',
+  },
+
 })
+
+
+// <Text>Accelerometer:</Text>
+// <Text>x: {accelData.x.toFixed(3)}</Text>
+// <Text>y: {accelData.y.toFixed(3)}</Text>
+// <Text>z: {accelData.z.toFixed(3)}</Text>
+// <Text></Text>
+// <Text></Text>
+// <Text>Gyroscope:</Text>
+// <Text>x: {gyroData.x.toFixed(3)}</Text>
+// <Text>y: {gyroData.y.toFixed(3)}</Text>
+// <Text>z: {gyroData.z.toFixed(3)}</Text>

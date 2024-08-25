@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-      <Stack.Navigator initialRouteName="timer">
+      <Stack.Navigator initialRouteName="welcome">
         <Stack.Screen name='welcome' component={Welcome} options={{ headerShown : false}} />
         <Stack.Screen name="timer" component={Timer} options={{ headerShown: false }} />
         <Stack.Screen name='customize' component={Customize} options={{ headerShown : false}} />

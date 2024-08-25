@@ -1,103 +1,117 @@
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, SafeAreaView, FlatList } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-export default function Customize({ navigation }){
+export default function Customize({ navigation }) {
+    StatusBar.setBarStyle('dark-content');
 
-//     StatusBar.setBarStyle('dark-content');
+    const [time, setTime] = useState('00:00:00');
+    const [selectedHourIndex, setSelectedHourIndex] = useState(0);
+    const [selectedMinuteIndex, setSelectedMinuteIndex] = useState(0);
 
-//     const [time, setTime] = useState('');
+    const hourListRef = useRef(null);
+    const minuteListRef = useRef(null);
 
-//     const press = (timeValue) => {
-//         setTime(timeValue)
-//         StatusBar.setBarStyle('light-content');
-//         navigation.navigate('start', { timer: timeValue });
-//     }
+    useEffect(() => {
+        // Scroll to the selected hour and minute when the component mounts or time changes
+        hourListRef.current?.scrollToIndex({ 
+            index: selectedHourIndex, 
+            animated: true,
+            viewPosition: 0.5 // Center the selected item
+        });
+        minuteListRef.current?.scrollToIndex({ 
+            index: selectedMinuteIndex, 
+            animated: true,
+            viewPosition: 0.5 // Center the selected item
+        });
+    }, [selectedHourIndex, selectedMinuteIndex]);
 
-        const [selectedHour, setSelectedHour] = useState(0);
-        const [selectedMinute, setSelectedMinute] = useState(0);
-        const [selectedSecond, setSelectedSecond] = useState(0);
+    const press = (timeValue) => {
+        setTime(timeValue);
+        StatusBar.setBarStyle('light-content');
+        navigation.navigate('start', { timer: timeValue });
+    }
 
-        const renderItem = ({ item }) => (
+    const onHourScrollEnd = (event) => {
+        const indexH = Math.round(event.nativeEvent.contentOffset.y / 50);
+        const hour = hours[indexH] || '00';
+        const currentMinutes = time.split(':')[1]; // Get current minutes from the state
+        setTime(`${hour}:${currentMinutes}:00`); // Update state with new time
+        setSelectedHourIndex(indexH); // Update selected hour index
+    };
+
+    const onMinuteScrollEnd = (event) => {
+        const indexM = Math.round(event.nativeEvent.contentOffset.y / 50);
+        const minute = minutes[indexM] || '00';
+        const currentHour = time.split(':')[0]; // Get current hour from the state
+        setTime(`${currentHour}:${minute}:00`); // Update state with new time
+        setSelectedMinuteIndex(indexM); // Update selected minute index
+    };
+
+    const renderItem = ({ item, index, type }) => (
         <View style={styles.item}>
-            <Text style={styles.itemText}>{item}</Text>
+            <Text style={[
+                styles.itemText,
+                (type === 'hour' && index === selectedHourIndex) ? styles.selectedItemText : null,
+                (type === 'minute' && index === selectedMinuteIndex) ? styles.selectedItemText : null
+            ]}>
+                {item}
+            </Text>
         </View>
-        );
+    );
 
-        const scrollToIndex = (index, ref) => {
-        ref.current?.scrollToIndex({ animated: true, index });
-        };
-
-        const hours = Array.from({ length: 7 }, (_, i) => String(i).padStart(2, '0'));
-        const minutesAndSeconds = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0')); // Generate numbers from 0 to 59
-
+    let hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+    hours.push(" ");
+    hours.splice(0, 0, "  ");
+    let minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
+    minutes.push(" ");
+    minutes.splice(0, 0, "  ");
 
     return (
         <SafeAreaView style={styles.safeContainer}>
-            <SafeAreaView style={{backgroundColor: '#25204f'}}/>
             <View style={styles.container}>
                 <Text style={styles.select}>
                     Select a timer
                 </Text>
 
-            <View style={styles.pickerContainer}>
-            <FlatList
-                ref={flatList => { this.hourList = flatList; }}
-                data={hours}
-                keyExtractor={(item) => item.toString()}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-                snapToInterval={40}
-                decelerationRate="fast"
-                onMomentumScrollEnd={(event) => {
-                const index = Math.round(event.nativeEvent.contentOffset.y / 40);
-                setSelectedHour(index);
-                }}
-                style={styles.list}
-            />
-            <Text style={styles.colon}>:</Text>
-            <FlatList
-                ref={flatList => { this.minuteList = flatList; }}
-                data={minutesAndSeconds}
-                keyExtractor={(item) => item.toString()}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-                snapToInterval={40}
-                decelerationRate="fast"
-                onMomentumScrollEnd={(event) => {
-                const index = Math.round(event.nativeEvent.contentOffset.y / 40);
-                setSelectedMinute(index);
-                }}
-                style={styles.list}
-            />
-            <Text style={styles.colon}>:</Text>
-            <FlatList
-                ref={flatList => { this.secondList = flatList; }}
-                data={minutesAndSeconds}
-                keyExtractor={(item) => item.toString()}
-                renderItem={renderItem}
-                showsVerticalScrollIndicator={false}
-                snapToInterval={40}
-                decelerationRate="fast"
-                onMomentumScrollEnd={(event) => {
-                const index = Math.round(event.nativeEvent.contentOffset.y / 30);
-                setSelectedSecond(index);
-                }}
-                style={styles.list}
-            />
-            </View>
-            <Text style={styles.selectedTime}>
-            Selected Time: {`${selectedHour}h : ${selectedMinute}m : ${selectedSecond}s`}
-            </Text>
+                <View style={styles.pickerContainer}>
+                    <FlatList
+                        ref={hourListRef}
+                        data={hours}
+                        keyExtractor={(item) => item.toString()}
+                        renderItem={(itemData) => renderItem({ ...itemData, type: 'hour' })}
+                        showsVerticalScrollIndicator={false}
+                        snapToInterval={50}
+                        decelerationRate="fast"
+                        onMomentumScrollEnd={onHourScrollEnd}
+                        style={styles.list}
+                    />
+                    <Text style={styles.colon}>:</Text>
+                    <FlatList
+                        ref={minuteListRef}
+                        data={minutes}
+                        keyExtractor={(item) => item.toString()}
+                        renderItem={(itemData) => renderItem({ ...itemData, type: 'minute' })}
+                        showsVerticalScrollIndicator={false}
+                        snapToInterval={50}
+                        decelerationRate="fast"
+                        onMomentumScrollEnd={onMinuteScrollEnd}
+                        style={styles.list}
+                    />
+                    <Text style={styles.colon}>:</Text>
+                    <Text style={styles.itemText0}>  00</Text>
+                </View>
+                {/* <Text style={styles.itemText}>
+                    {time}
+                </Text> */}
 
                 <TouchableOpacity 
-                style={styles.touch}
-                onPress={() => press()}>
+                    style={styles.touch}
+                    onPress={() => press(time)}
+                >
                     <Text style={styles.buttonText}>
-                    Start
+                        Start
                     </Text>
                 </TouchableOpacity>
-
-                {/* <Footer navigation={navigation} /> */}
             </View>
         </SafeAreaView>
     );
@@ -108,30 +122,25 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#cce3f0'
     },
-
     container: {
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#cce3f0',
-
     },
-
     buttonText: {
         fontSize: 25,
         fontWeight: 'bold',
         color: 'white',
         textAlign: 'center',
     },
-
     touch: {
         backgroundColor: '#25204f',
         padding: 15,
         borderRadius: 20,
         margin: 15,
         width: 120,
-        marginTop: '5%',
+        marginTop: '35%',
     },
-
     select: {
         fontSize: 35,
         fontWeight: 'bold',
@@ -139,58 +148,37 @@ const styles = StyleSheet.create({
         marginTop: '35%',
         marginBottom: '35%',
     },
-
     pickerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '80%',
     },
-
     list: {
-        height: 120,
+        height: 150,
     },
-        
     item: {
-        height: 40,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
     },
-
     itemText: {
         fontSize: 30,
         color: '#25204f',
         fontWeight: 'bold',
     },
-
+    itemText0: {
+        fontSize: 40,
+        color: '#25204f',
+        fontWeight: 'bold',
+    },
+    selectedItemText: {
+        fontSize: 40, // Larger font size for selected item
+    },
     colon: {
+        marginHorizontal: 10,
         fontSize: 35,
         fontWeight: 'bold',
         color: '#25204f',
         textAlign: 'center',
     },
-})
-
-
-// const styles = StyleSheet.create({
-// container: {
-//   flex: 1,
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   backgroundColor: '#f8f8f8',
-// },
-// label: {
-//   fontSize: 18,
-//   fontWeight: 'bold',
-//   marginBottom: 20,
-// },
-
-
-// colon: {
-//   fontSize: 20,
-//   marginHorizontal: 10,
-// },
-// selectedTime: {
-//   marginTop: 20,
-//   fontSize: 16,
-// },
-// });
+});

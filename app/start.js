@@ -10,7 +10,6 @@ export default function Start({ route, navigation }) {
     const [visability, setVisability] = useState(true);
     const [cameraRef, setCameraRef] = useState(null);
     const [state, setState] = useState('')
-    const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.off);
 
     const toggleSwitch = () => {
         setVisability(previousState => !previousState);
@@ -91,15 +90,6 @@ export default function Start({ route, navigation }) {
             console.log('Camera is not available or has been stopped.');
         }
     };
-    
-    const toggleFlash = () => {
-        setFlashMode(
-          flashMode === Camera.Constants.FlashMode.off
-            ? Camera.Constants.FlashMode.on
-            : Camera.Constants.FlashMode.off
-        );
-    };
-
 
     // Format time left for display
     const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
@@ -128,8 +118,7 @@ export default function Start({ route, navigation }) {
                 <View style={styles.cameraborder}>
                     <Camera  // remove sound
                         style={styles.camera}
-                        type={Camera.Constants.Type.front}
-                        flashMode={flashMode}
+                        type={Camera.Constants.Type.back}
                         ref={ref => setCameraRef(ref)}
                     />
                     <View style={styles.row}>
@@ -151,7 +140,7 @@ export default function Start({ route, navigation }) {
                     <Camera style={styles.cameraVanish}
                         type={Camera.Constants.Type.front}
                         ref={ref => setCameraRef(ref)}
-                        flashMode={flashMode} />
+                        />
                     <View style={styles.row}>
                         <Text style={styles.cameraText}>
                             Camera
@@ -230,7 +219,7 @@ const styles = StyleSheet.create({
     cameraborder: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 470,
+        height: 420,
         width: 300,
         backgroundColor: '#cce3f0',
         borderRadius: 20,
