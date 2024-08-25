@@ -12,7 +12,7 @@ module.exports = (() => {
 
   // Define custom server settings, such as host and port
   config.server = {
-    host: '192.168.1.7', // Your local machine IP
+    host: '192.168.1.36', // Your local machine IP
     port: 8081, // Default port for Metro, change if necessary
   };
 

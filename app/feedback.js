@@ -7,6 +7,10 @@ export default function Feedback({ route, navigation }){
     const { initial } = route.params;
     const final = feed/initial * 100
 
+    const hours = Math.floor(feed / 3600).toString().padStart(2, '0');
+    const minutes = Math.floor((feed % 3600) / 60).toString().padStart(2, '0');
+    const seconds = (feed % 60).toString().padStart(2, '0');
+
     const press = () => { 
         navigation.navigate('timer');
     }
@@ -20,7 +24,7 @@ export default function Feedback({ route, navigation }){
                     Session Feedback
                 </Text>
                 <Text style={styles.select2}>
-                    You were {final}% focused
+                    Your focus time is {hours}:{minutes}:{seconds}
                 </Text>
 
                 <TouchableOpacity 

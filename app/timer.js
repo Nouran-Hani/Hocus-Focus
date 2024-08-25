@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar, SafeAreaView } from 'react-native';
 import React, { useState } from 'react';
-import Footer from './footer'
 
 export default function Timer({ navigation }){
 
@@ -14,6 +13,10 @@ export default function Timer({ navigation }){
         navigation.navigate('start', { timer: timeValue });
     }
 
+    const custome = () => {
+        navigation.navigate('customize')
+    }
+
     return (
         <SafeAreaView style={styles.safeContainer}>
             <SafeAreaView style={{backgroundColor: '#25204f'}}/>
@@ -24,9 +27,9 @@ export default function Timer({ navigation }){
 
                 <TouchableOpacity 
                 style={styles.touch}
-                onPress={() => press('00:00:30')}>
+                onPress={() => press('00:05:00')}>
                     <Text style={styles.buttonText}>
-                        00:00:30
+                        00:05:00
                     </Text>
                 </TouchableOpacity>
 
@@ -43,6 +46,14 @@ export default function Timer({ navigation }){
                 onPress={() => press('01:30:00')}>
                     <Text style={styles.buttonText}>
                         01:30:00
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                style={styles.touch}
+                onPress={() => custome()}>
+                    <Text style={styles.buttonText}>
+                    Customize
                     </Text>
                 </TouchableOpacity>
 
@@ -65,6 +76,7 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
+        textAlign: 'center',
         fontSize: 25,
         fontWeight: 'bold',
         color: 'white',
@@ -74,7 +86,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#25204f',
         padding: 15,
         borderRadius: 20,
-        margin: 15,
+        margin: 10,
+        width: 170,
     },
 
     select: {
@@ -82,6 +95,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#25204f',
         marginTop: '35%',
-        marginBottom: '35%',
+        marginBottom: '30%',
     }
 })

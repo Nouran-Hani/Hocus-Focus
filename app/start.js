@@ -43,11 +43,6 @@ export default function Start({ route, navigation }) {
 
     useEffect(() => {
         if (!cameraRef) {return;}
-        // Skip setting up the interval if cameraRef is not available
-        // if (timeLeft === 0) {
-        //     navigation.pop()
-        //     console.log("after pop")
-        // }
         const intervalId = setInterval(() => {
             if (cameraRef) { // Ensure cameraRef is set before capturing
                 handleCapture();
@@ -75,11 +70,12 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('http://192.168.1.7:5001/video', formData, {
+                const response = await axios.post('http://92.113.26.243:5001/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
+                
                 setState(response.data.state);
 
                 if (response.data.state === "disengaged")
@@ -102,7 +98,8 @@ export default function Start({ route, navigation }) {
             ? Camera.Constants.FlashMode.on
             : Camera.Constants.FlashMode.off
         );
-      };
+    };
+
 
     // Format time left for display
     const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
