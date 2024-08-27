@@ -8,6 +8,8 @@ export default function SensorData({ navigation }) {
 
   const [showLeaveMessage, setShowLeaveMessage] = useState(false);
   const [feedbackTime, setFeedbackTime] = useState(initialTime);
+  const [notificationVisible, setNotificationVisible] = useState(false);
+
   // State for accelerometer data
   const [accelData, setAccelData] = useState({
     x: 0,
@@ -82,6 +84,19 @@ export default function SensorData({ navigation }) {
     }
   }, [gyroData]); // Depend on gyroData to re-evaluate the condition
 
+  useEffect(() => {
+    // Show the notification when the component mounts
+    setNotificationVisible(true);
+
+    // Hide the notification after 5 seconds
+    const timer = setTimeout(() => {
+    setNotificationVisible(false);
+    }, 5000);
+
+    // Clean up the timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
+
 
   // Format time left for display
   const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
@@ -102,6 +117,10 @@ export default function SensorData({ navigation }) {
 
   return (
     <View style={styles.container}>
+      
+      {notificationVisible ?
+        (<Text style={styles.not}>Notifications are paused</Text>):(<></>)}
+
       <View style={styles.row}>
         <Text style={styles.timer}>{hours}</Text>
         <Text style={styles.timer}>{minutes}</Text>
@@ -148,6 +167,17 @@ const styles = StyleSheet.create({
       marginTop: '30%',
       marginBottom: '10%',
   },
+  not: {
+    fontSize: 15,
+    color: 'red',
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: 'red',
+    textAlign: 'center',
+    padding: 7,
+    marginBottom: 5,
+    width: 250,
+}
 
 })
 

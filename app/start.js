@@ -9,7 +9,8 @@ export default function Start({ route, navigation }) {
     const [permission, requestPermission] = Camera.useCameraPermissions()
     const [visability, setVisability] = useState(true);
     const [cameraRef, setCameraRef] = useState(null);
-    const [state, setState] = useState('')
+    const [state, setState] = useState('');
+    const [notificationVisible, setNotificationVisible] = useState(false);
 
     const toggleSwitch = () => {
         setVisability(previousState => !previousState);
@@ -47,7 +48,7 @@ export default function Start({ route, navigation }) {
                 handleCapture();
                 // console.log('cameraRef is on');
             }
-        }, 10000); // Trigger every 5 seconds
+        }, 10000); // Trigger every 10 seconds
     
         // Clean up interval on component unmount or when cameraRef changes
         return () => {
@@ -81,6 +82,10 @@ export default function Start({ route, navigation }) {
                     {
                     setFeedbackTime(feedbackTime => feedbackTime - 10);
                 }
+
+                // if (response.data.state === "absent"){
+                    
+                // }
                 console.log(response.data.state)
             } catch (error) {
                 console.log(error);
@@ -91,11 +96,19 @@ export default function Start({ route, navigation }) {
         }
     };
 
-    // useEffect(() => {
-    //     if (state) {  // Ensure state has a value before logging
-    //         console.log('State returned at:', timeLeft);
-    //     }
-    // }, [state, timeLeft]);
+    useEffect(() => {
+        // Show the notification when the component mounts
+        setNotificationVisible(true);
+
+        // Hide the notification after 5 seconds
+        const timer = setTimeout(() => {
+        setNotificationVisible(false);
+        }, 5000);
+
+        // Clean up the timer on unmount
+        return () => clearTimeout(timer);
+    }, []);
+
 
     // Format time left for display
     const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
@@ -120,6 +133,10 @@ export default function Start({ route, navigation }) {
 
     return (
         <View style={styles.container}>
+
+        {notificationVisible ?
+        (<Text style={styles.not}>Notifications are paused</Text>):(<></>)}
+
             {visability ? (
                 <View style={styles.cameraborder}>
                     <Camera  // remove sound
@@ -261,4 +278,15 @@ const styles = StyleSheet.create({
         height: 300,
         marginTop: 20,
     },
+    not: {
+        fontSize: 15,
+        color: 'red',
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: 'red',
+        textAlign: 'center',
+        padding: 7,
+        marginBottom: 5,
+        width: 250,
+    }
 });
