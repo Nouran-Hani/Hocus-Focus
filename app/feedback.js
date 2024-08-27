@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar, SafeAreaView } fro
 import React, { useState } from 'react';
 
 export default function Feedback({ route, navigation }){
+    StatusBar.setBarStyle('dark-content');
 
     const { feed } = route.params;
     const { initial } = route.params;

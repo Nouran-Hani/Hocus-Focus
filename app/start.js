@@ -47,7 +47,7 @@ export default function Start({ route, navigation }) {
                 handleCapture();
                 // console.log('cameraRef is on');
             }
-        }, 5000); // Trigger every 5 seconds
+        }, 10000); // Trigger every 5 seconds
     
         // Clean up interval on component unmount or when cameraRef changes
         return () => {
@@ -74,12 +74,12 @@ export default function Start({ route, navigation }) {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
-                
+
                 setState(response.data.state);
 
                 if (response.data.state === "disengaged")
                     {
-                    setFeedbackTime(feedbackTime => feedbackTime - 5);
+                    setFeedbackTime(feedbackTime => feedbackTime - 10);
                 }
                 console.log(response.data.state)
             } catch (error) {
@@ -90,6 +90,12 @@ export default function Start({ route, navigation }) {
             console.log('Camera is not available or has been stopped.');
         }
     };
+
+    useEffect(() => {
+        if (state) {  // Ensure state has a value before logging
+            console.log('State returned at:', timeLeft);
+        }
+    }, [state, timeLeft]);
 
     // Format time left for display
     const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
@@ -118,7 +124,7 @@ export default function Start({ route, navigation }) {
                 <View style={styles.cameraborder}>
                     <Camera  // remove sound
                         style={styles.camera}
-                        type={Camera.Constants.Type.back}
+                        type={Camera.Constants.Type.front}
                         ref={ref => setCameraRef(ref)}
                     />
                     <View style={styles.row}>

@@ -4,7 +4,7 @@ import { Gyroscope, Accelerometer } from 'expo-sensors';
 
 export default function SensorData({ navigation }) {
 
-  const initialTime = 10
+  const initialTime = 3600
 
   const [showLeaveMessage, setShowLeaveMessage] = useState(false);
   const [feedbackTime, setFeedbackTime] = useState(initialTime);
