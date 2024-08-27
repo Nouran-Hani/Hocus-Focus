@@ -58,8 +58,8 @@ export default function Start({ route, navigation }) {
 
     const handleCapture = async () => {
         if (cameraRef){
-            const photo = await cameraRef.takePictureAsync({ base64: true });
-    
+            const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
+            
             // Send the captured image to your Flask backend
             const formData = new FormData();
             formData.append('image', {
@@ -77,7 +77,7 @@ export default function Start({ route, navigation }) {
 
                 setState(response.data.state);
 
-                if (response.data.state === "disengaged")
+                if (response.data.state === "disengaged" || response.data.state === "absent")
                     {
                     setFeedbackTime(feedbackTime => feedbackTime - 10);
                 }
@@ -91,11 +91,11 @@ export default function Start({ route, navigation }) {
         }
     };
 
-    useEffect(() => {
-        if (state) {  // Ensure state has a value before logging
-            console.log('State returned at:', timeLeft);
-        }
-    }, [state, timeLeft]);
+    // useEffect(() => {
+    //     if (state) {  // Ensure state has a value before logging
+    //         console.log('State returned at:', timeLeft);
+    //     }
+    // }, [state, timeLeft]);
 
     // Format time left for display
     const hours = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
@@ -164,9 +164,9 @@ export default function Start({ route, navigation }) {
             )}
 
             <Text style={styles.message}>{state}</Text>
-            {state === "Yawn" || state === "Sleep" ? ( 
+            {state === "disengaged" ? ( 
                 <Text style={styles.message}>Drink some coffee</Text>
-            ) : state === "Absent" ? (
+            ) : state === "absent" ? (
                 <Text style={styles.message}>Put your device correctly</Text>
             ): null}
 

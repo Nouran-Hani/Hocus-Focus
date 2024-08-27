@@ -62,7 +62,7 @@ export default function Welcome({ navigation }){
                 />
             </Animated.View>
             <Animated.Text style={[styles.text1, textStyle]}>
-                Hocus Focus
+                Study Buddy
             </Animated.Text>
 
             <Animated.View style={content}>
