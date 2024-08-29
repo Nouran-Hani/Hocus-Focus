@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, StatusBar, Switch, Pressable, Button, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Switch, Pressable, Button, SafeAreaView, Alert } from 'react-native';
 import { Camera } from 'expo-camera/legacy';
 import axios from 'axios';
 import Feather from '@expo/vector-icons/Feather';
@@ -82,13 +82,12 @@ export default function Start({ route, navigation }) {
                     {
                     setFeedbackTime(feedbackTime => feedbackTime - 10);
                 }
-
                 // if (response.data.state === "absent"){
                     
                 // }
                 console.log(response.data.state)
             } catch (error) {
-                console.log(error);
+                Alert.alert(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
         } else {
@@ -187,7 +186,7 @@ export default function Start({ route, navigation }) {
                 <Text style={styles.message}>Drink some coffee</Text>
             ) : state === "absent" ? (
                 <Text style={styles.message}>Put your device correctly</Text>
-            ): null}
+            ): <Text>No out put</Text>}
 
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
