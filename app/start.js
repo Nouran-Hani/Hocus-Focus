@@ -71,7 +71,7 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('http://92.113.26.244:5001/video', formData, {
+                const response = await axios.post('http://92.113.26.243:5001/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
