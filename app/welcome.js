@@ -4,8 +4,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring } from 'react-native-reanimated';
 
 export default function Welcome({ navigation }){
-    const image = require('../assets/images/dark logo 2.png');
-    StatusBar.setBarStyle('dark-content');
+    StatusBar.setBarStyle('dark-content')
+    const image = require('../assets/images/logo.png');
 
     // Animations
     const progress = useSharedValue(0)
@@ -46,6 +46,7 @@ export default function Welcome({ navigation }){
     }, []);
 
     const selectTime = () => {
+        StatusBar.setBarStyle('dark-content');
         navigation.navigate('timer')
     }
 

@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "HocusFocus",
+    "name": "Study Buddy",
     "slug": "HocusFocus",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/newlogo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/newlogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,15 +17,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/newlogo.png",
         "backgroundColor": "#ffffff"
       },
+      "permissions": ["INTERNET"],
       "package": "com.studyBuddy"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/newlogo.png"
     },
     "plugins": [
       "expo-router"
@@ -40,6 +41,9 @@
       "eas": {
         "projectId": "51917cc6-1e9f-436c-b1fb-a524de9a112b"
       }
+    },
+    "updates": {
+      "enabled": true
     }
   }
 }

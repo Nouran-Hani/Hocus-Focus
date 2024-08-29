@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Vibration, StatusBar } from 'react-native';
 import { Gyroscope, Accelerometer } from 'expo-sensors';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function SensorData({ navigation }) {
+  StatusBar.setBarStyle('light-content');
 
   const initialTime = 3600
 
@@ -28,12 +30,11 @@ export default function SensorData({ navigation }) {
 
     useEffect(() => {
         if (timeLeft === 0) {
-            // console.log('final cameraRef is', cameraRef)
+            StatusBar.setBarStyle('dark-content');
             navigation.replace('feedback', 
                 {feed: feedbackTime,
                 initial: initialTime
             });
-            StatusBar.setBarStyle('dark-content');
             return;
         }
         const intervalId = setInterval(() => {
@@ -119,7 +120,9 @@ export default function SensorData({ navigation }) {
     <View style={styles.container}>
       
       {notificationVisible ?
-        (<Text style={styles.not}>Notifications are paused</Text>):(<></>)}
+        (<Text style={styles.not}>
+          <Feather name="alert-triangle" size={20} color="red" /><Text>  </Text>
+          Notifications are paused</Text>):(<></>)}
 
       <View style={styles.row}>
         <Text style={styles.timer}>{hours}</Text>

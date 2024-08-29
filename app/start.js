@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, StatusBar, Switch, Pressable, Button, SafeAreaView } from 'react-native';
 import { Camera } from 'expo-camera/legacy';
 import axios from 'axios';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function Start({ route, navigation }) {
     StatusBar.setBarStyle('light-content');
@@ -25,13 +26,12 @@ export default function Start({ route, navigation }) {
 
     useEffect(() => {
         if (timeLeft === 0) {
+            StatusBar.setBarStyle('dark-content');
             setCameraRef(null);
-            // console.log('final cameraRef is', cameraRef)
             navigation.replace('feedback', 
                 {feed: feedbackTime,
                 initial: initialTimeInSeconds
             });
-            StatusBar.setBarStyle('dark-content');
             return;
         }
         const intervalId = setInterval(() => {
@@ -135,7 +135,9 @@ export default function Start({ route, navigation }) {
         <View style={styles.container}>
 
         {notificationVisible ?
-        (<Text style={styles.not}>Notifications are paused</Text>):(<></>)}
+        (<Text style={styles.not}>
+            <Feather name="alert-triangle" size={20} color="red" /><Text>  </Text>
+            Notifications are paused</Text>):(<></>)}
 
             {visability ? (
                 <View style={styles.cameraborder}>

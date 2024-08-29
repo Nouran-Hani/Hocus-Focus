@@ -9,7 +9,6 @@ export default function Timer({ navigation }){
 
     const press = (timeValue) => {
         setTime(timeValue)
-        StatusBar.setBarStyle('light-content');
         navigation.navigate('start', { timer: timeValue });
     }
 

@@ -13,6 +13,7 @@ export default function Feedback({ route, navigation }){
     const seconds = (feed % 60).toString().padStart(2, '0');
 
     const press = () => { 
+        StatusBar.setBarStyle('dark-content');
         navigation.navigate('welcome');
     }
 
