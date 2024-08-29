@@ -87,6 +87,7 @@ export default function Start({ route, navigation }) {
                 console.log(response.data.state)
             } catch (error) {
                 setError(error.message)
+                setState("")
                 console.log(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
@@ -135,7 +136,7 @@ export default function Start({ route, navigation }) {
 
         {notificationVisible ?
         (<Text style={styles.not}>
-            <Feather name="alert-triangle" size={20} color="red" /><Text>  </Text>
+            <Feather name="alert-triangle" size={15} color="red" /><Text>  </Text>
             Notifications are paused</Text>):(<></>)}
 
             {visability ? (
@@ -188,7 +189,7 @@ export default function Start({ route, navigation }) {
                 <Text style={styles.message}>Put your device correctly</Text>
             ): <Text style={styles.message}>No output</Text>}
 
-            {error ? (<Text style={styles.error}>{error}</Text>):null}
+            {error ? (<Text style={styles.error}>Error: {error}</Text>):null}
 
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     vanish: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 70,
+        height: 50,
         width: 200,
         backgroundColor: '#cce3f0',
         borderRadius: 15,

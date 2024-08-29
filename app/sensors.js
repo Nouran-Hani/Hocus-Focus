@@ -121,7 +121,7 @@ export default function SensorData({ navigation }) {
       
       {notificationVisible ?
         (<Text style={styles.not}>
-          <Feather name="alert-triangle" size={20} color="red" /><Text>  </Text>
+          <Feather name="alert-triangle" size={15} color="red" /><Text>  </Text>
           Notifications are paused</Text>):(<></>)}
 
       <View style={styles.row}>
