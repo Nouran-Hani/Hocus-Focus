@@ -12,7 +12,7 @@ export default function Start({ route, navigation }) {
     const [cameraRef, setCameraRef] = useState(null);
     const [state, setState] = useState('');
     const [notificationVisible, setNotificationVisible] = useState(false);
-    const [merror, setMerror] = useState("")
+    const [error, setError] = useState("")
 
     const toggleSwitch = () => {
         setVisability(previousState => !previousState);
@@ -71,14 +71,14 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('http://92.113.26.243:5001/video', formData, {
+                const response = await axios.post('http://92.113.26.244:5001/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     }
                 });
 
                 setState(response.data.state);
-                setMerror("");
+                setError("");
 
                 if (response.data.state === "disengaged" || response.data.state === "absent")
                     {
@@ -86,7 +86,7 @@ export default function Start({ route, navigation }) {
                 }
                 console.log(response.data.state)
             } catch (error) {
-                setMerror(error)
+                setError(error.message)
                 console.log(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
@@ -188,7 +188,7 @@ export default function Start({ route, navigation }) {
                 <Text style={styles.message}>Put your device correctly</Text>
             ): <Text style={styles.message}>No output</Text>}
 
-            {merror ? (<Text style={styles.error}>error</Text>):null}
+            {error ? (<Text style={styles.error}>{error}</Text>):null}
 
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
         borderColor: 'red',
         textAlign: 'center',
         padding: 7,
-        marginBottom: 5,
+        marginBottom: 10,  
         width: 250,
     },
     error: {
