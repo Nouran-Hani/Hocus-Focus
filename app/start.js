@@ -12,7 +12,7 @@ export default function Start({ route, navigation }) {
     const [cameraRef, setCameraRef] = useState(null);
     const [state, setState] = useState('');
     const [notificationVisible, setNotificationVisible] = useState(false);
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
 
     const toggleSwitch = () => {
         setVisability(previousState => !previousState);
@@ -78,7 +78,7 @@ export default function Start({ route, navigation }) {
                 });
 
                 setState(response.data.state);
-                setError(false);
+                setError("");
 
                 if (response.data.state === "disengaged" || response.data.state === "absent")
                     {
@@ -86,7 +86,7 @@ export default function Start({ route, navigation }) {
                 }
                 console.log(response.data.state)
             } catch (error) {
-                setError(true)
+                setError(error)
                 // Alert.alert(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
@@ -188,7 +188,7 @@ export default function Start({ route, navigation }) {
                 <Text style={styles.message}>Put your device correctly</Text>
             ): <Text style={styles.message}>No output</Text>}
 
-            {error ? (<Text style={styles.error}>No image sent</Text>):(<></>)}
+            {error ? (<Text style={styles.error}>{error}</Text>):(<></>)}
 
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
