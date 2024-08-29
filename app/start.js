@@ -12,7 +12,7 @@ export default function Start({ route, navigation }) {
     const [cameraRef, setCameraRef] = useState(null);
     const [state, setState] = useState('');
     const [notificationVisible, setNotificationVisible] = useState(false);
-    const [error, setError] = useState("")
+    const [merror, setMerror] = useState("")
 
     const toggleSwitch = () => {
         setVisability(previousState => !previousState);
@@ -78,7 +78,7 @@ export default function Start({ route, navigation }) {
                 });
 
                 setState(response.data.state);
-                setError("");
+                setMerror("");
 
                 if (response.data.state === "disengaged" || response.data.state === "absent")
                     {
@@ -86,8 +86,8 @@ export default function Start({ route, navigation }) {
                 }
                 console.log(response.data.state)
             } catch (error) {
-                setError(error)
-                // Alert.alert(error);
+                setMerror(error)
+                console.log(error);
                 // Alert.alert('Error', 'Failed to process the image.');
             }
         } else {
@@ -181,14 +181,14 @@ export default function Start({ route, navigation }) {
                 </View>
             )}
 
-            <Text style={styles.message}>{state}</Text>
+            {state ? (<Text style={styles.message}>{state}</Text>): null}
             {state === "disengaged" ? ( 
                 <Text style={styles.message}>Drink some coffee</Text>
             ) : state === "absent" ? (
                 <Text style={styles.message}>Put your device correctly</Text>
             ): <Text style={styles.message}>No output</Text>}
 
-            {error ? (<Text style={styles.error}>{error}</Text>):(<></>)}
+            {merror ? (<Text style={styles.error}>error</Text>):null}
 
             <View style={styles.row}>
                 <Text style={styles.timer}>{hours}</Text>
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
         margin: 15,
     },
     camera: {
-        height: 350,
-        width: 270,
+        height: 340,
+        width: 260,
         marginTop: 12,
     },
     cameraVanish: {
@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
     cameraborder: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 420,
-        width: 300,
+        height: 410,
+        width: 290,
         backgroundColor: '#cce3f0',
         borderRadius: 20,
         marginBottom: 20,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     vanish: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 100,
+        height: 70,
         width: 200,
         backgroundColor: '#cce3f0',
         borderRadius: 15,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         width: 250,
     },
-    message: {
+    error: {
         textAlign: 'center',
         fontSize: 24,
         color: "red",
