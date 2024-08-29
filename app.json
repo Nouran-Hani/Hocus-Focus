@@ -20,7 +20,9 @@
         "foregroundImage": "./assets/images/newlogo.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["INTERNET"],
+      "permissions": [
+        "INTERNET"
+      ],
       "package": "com.studyBuddy"
     },
     "web": {
@@ -43,7 +45,11 @@
       }
     },
     "updates": {
-      "enabled": true
+      "enabled": true,
+      "url": "https://u.expo.dev/51917cc6-1e9f-436c-b1fb-a524de9a112b"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
