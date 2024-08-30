@@ -20,9 +20,7 @@
         "foregroundImage": "./assets/images/logo2.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "INTERNET"
-      ],
+      "permissions": ["INTERNET"],
       "package": "com.studyBuddy"
     },
     "web": {
