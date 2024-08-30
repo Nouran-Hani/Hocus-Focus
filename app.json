@@ -21,8 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "permissions": ["INTERNET"],
-      "package": "com.studyBuddy",
-      "usesCleartextTraffic": true
+      "package": "com.studyBuddy"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +29,8 @@
       "favicon": "./assets/images/logo2.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "./withCleartextTraffic"
     ],
     "experiments": {
       "typedRoutes": true
