@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     textAlign: 'center',
     padding: 7,
-    marginBottom: 5,
     width: 250,
 }
 

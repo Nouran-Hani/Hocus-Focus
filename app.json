@@ -29,8 +29,7 @@
       "favicon": "./assets/images/logo2.png"
     },
     "plugins": [
-      "expo-router",
-      "./withCleartextTraffic"
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true

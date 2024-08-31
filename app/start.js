@@ -89,6 +89,10 @@ export default function Start({ route, navigation }) {
                 setError(error.message)
                 setState("")
                 console.log(error);
+                if (error.message === "Network Error"){
+                    Alert.alert("This feature needs internet connection")
+                    navigation.navigate("welcome")
+                }
                 // Alert.alert('Error', 'Failed to process the image.');
             }
         } else {
@@ -187,7 +191,7 @@ export default function Start({ route, navigation }) {
                 <Text style={styles.message}>Drink some coffee</Text>
             ) : state === "absent" ? (
                 <Text style={styles.message}>Put your device correctly</Text>
-            ): <Text style={styles.message}>No output</Text>}
+            ): null}
 
             {error ? (<Text style={styles.error}>Error: {error}</Text>):null}
 
