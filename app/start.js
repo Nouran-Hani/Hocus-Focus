@@ -58,109 +58,111 @@ export default function Start({ route, navigation }) {
         };
     }, [cameraRef]); // Depend on cameraRef so it re-runs if cameraRef changes
 
-    // const handleCapture = async () => {
-        // if (cameraRef){
-        //     const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
+    const handleCapture = async () => {
+        if (cameraRef){
+            const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
             
-        //     // Send the captured image to your Flask backend
-        //     const formData = new FormData();
-        //     formData.append('image', {
-        //         uri: photo.uri,
-        //         name: 'photo.jpg',
-        //         type: 'image/jpeg',
-        //     });
-    
-        //     try {
-        //         const response = await axios.post('http://92.113.26.243:5001/video', formData, {
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data',
-        //             }
-        //         });
-
-        //         setState(response.data.state);
-        //         setError("");
-
-        //         if (response.data.state === "disengaged" || response.data.state === "absent")
-        //             {
-        //             setFeedbackTime(feedbackTime => feedbackTime - 10);
-        //         }
-        //         console.log(response.data.state)
-        //     } catch (error) {
-        //         setError(error.message)
-        //         setState("")
-        //         console.log(error);
-        //         if (error.message === "Network Error"){
-        //             Alert.alert("This feature needs internet connection")
-        //             navigation.navigate("welcome")
-        //         }
-        //         // Alert.alert('Error', 'Failed to process the image.');
-        //     }
-        // } else {
-        //     console.log('Camera is not available or has been stopped.');
-        // }
-        const handleCapture = async () => {
-            if (cameraRef) {
-              const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
-          
-              // Create a new FormData instance to hold the image data
-              const formData = new FormData();
-              formData.append('image', {
+            // Send the captured image to your Flask backend
+            const formData = new FormData();
+            formData.append('image', {
                 uri: photo.uri,
                 name: 'photo.jpg',
                 type: 'image/jpeg',
-              });
-          
-              // Create a new XMLHttpRequest instance
-              const xhr = new XMLHttpRequest();
-          
-              // Open a connection to the backend
-              xhr.open('POST', 'http://92.113.26.243:5001/video', true);
-          
-              // Set up the callback to handle the response
-              xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                  if (xhr.status === 200) {
-                    // Parse and handle the response
-                    const response = JSON.parse(xhr.responseText);
-                    setState(response.state);
-                    setError("");
-          
-                    if (response.state === "disengaged" || response.state === "absent") {
-                      setFeedbackTime(feedbackTime => feedbackTime - 10);
-                    }
-          
-                    console.log(response.state);
-                } else {
-                    // Handle errors
-                    console.error('Error', xhr.statusText);
-                    setError(xhr.statusText);
-                    setState("");
-                
-                    if (xhr.status === 0) {
-                        Alert.alert("This feature needs internet connection");
-                        navigation.navigate("welcome");
-                    }
+            });
+    
+            try {
+                const response = await axios.post('https://reqres.in/api/users', "formData", {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log('done')
+                Alert.alert('done')
+                setState(response.data.state);
+                setError("");
+
+                if (response.data.state === "disengaged" || response.data.state === "absent")
+                    {
+                    setFeedbackTime(feedbackTime => feedbackTime - 10);
                 }
+                console.log(response.data.state)
+            } catch (error) {
+                setError(error.message)
+                setState("")
+                console.log(error);
+                if (error.message === "Network Error"){
+                    Alert.alert("This feature needs internet connection")
+                    navigation.navigate("welcome")
+                }
+                // Alert.alert('Error', 'Failed to process the image.');
             }
-        };
-          
-        // Set the request headers for multipart/form-data (optional for FormData)
-        // xhr.setRequestHeader('Content-Type', 'multipart/form-data'); // Automatically set for FormData
-        
-        // Handle error cases like network issues
-        xhr.onerror = function () {
-            setError("Network Error");
-            console.log('Network Error');
-            Alert.alert("This feature needs internet connection");
-            navigation.navigate("welcome");
-        };
-        
-        // Send the form data
-        xhr.send(formData);
         } else {
             console.log('Camera is not available or has been stopped.');
         }
     };
+    //     const handleCapture = async () => {
+    //         if (cameraRef) {
+    //           const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
+          
+    //           // Create a new FormData instance to hold the image data
+    //           const formData = new FormData();
+    //           formData.append('image', {
+    //             uri: photo.uri,
+    //             name: 'photo.jpg',
+    //             type: 'image/jpeg',
+    //           });
+          
+    //           // Create a new XMLHttpRequest instance
+    //           const xhr = new XMLHttpRequest();
+          
+    //           // Open a connection to the backend
+    //           xhr.open('POST', 'http://92.113.26.243:5001/video', true);
+          
+    //           // Set up the callback to handle the response
+    //           xhr.onreadystatechange = function () {
+    //             if (xhr.readyState === 4) {
+    //                 if (xhr.status === 200) {
+    //                     // Parse and handle the response
+    //                     const response = JSON.parse(xhr.responseText);
+    //                     setState(response.state);
+    //                     setError("");
+            
+    //                     if (response.state === "disengaged" || response.state === "absent") {
+    //                         setFeedbackTime(feedbackTime => feedbackTime - 10);
+    //                     }
+
+    //                 console.log(response.state);
+    //             } else {
+    //                 // Handle errors
+    //                 console.error('Error', xhr.statusText);
+    //                 setError(xhr.statusText);
+    //                 setState("");
+                
+    //                 if (xhr.status === 0) {
+    //                     Alert.alert("This feature needs internet connection");
+    //                     navigation.navigate("welcome");
+    //                 }
+    //             }
+    //         }
+    //     };
+          
+    //     // Set the request headers for multipart/form-data (optional for FormData)
+    //     // xhr.setRequestHeader('Content-Type', 'multipart/form-data'); // Automatically set for FormData
+        
+    //     // Handle error cases like network issues
+    //     xhr.onerror = function () {
+    //         setError("Network Error");
+    //         console.log('Network Error');
+    //         Alert.alert("This feature needs internet connection");
+    //         navigation.navigate("welcome");
+    //     };
+        
+    //     // Send the form data
+    //     xhr.send(formData);
+    //     } else {
+    //         console.log('Camera is not available or has been stopped.');
+    //     }
+    // };
 
     useEffect(() => {
         // Show the notification when the component mounts
