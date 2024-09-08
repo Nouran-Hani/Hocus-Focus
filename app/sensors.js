@@ -130,8 +130,8 @@ export default function SensorData({ navigation }) {
         <Text style={styles.timer}>{seconds}</Text>
       </View>
       {showLeaveMessage ? 
-      (<Text style={styles.text}> Leave your phone </Text>)
-      : (<Text style={styles.text}>Good Luck</Text>)}
+      (<Text style={styles.text}>سيبي التليفون!!!</Text>)
+      : (<Text style={styles.text}>لو ماشتغلتيش دلوقتي هتشتغلي على اللاب في المواصلات</Text>)}
     </View>
   );
 }
