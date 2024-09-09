@@ -74,7 +74,7 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('nouran.great-eagle.net/video', formData, {
+                const response = await axios.post('https://nouran.great-eagle.net/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
