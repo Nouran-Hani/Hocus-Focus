@@ -69,7 +69,7 @@ export default function SensorData({ navigation }) {
 
   useEffect(() => {
     // Check the condition to show "Leave your phone"
-    if (Math.abs(gyroData.x) > 0.5 || Math.abs(gyroData.y) > 0.5 || Math.abs(gyroData.z) > 0.5) {
+    if (Math.abs(gyroData.x) > 1 || Math.abs(gyroData.y) > 1 || Math.abs(gyroData.z) > 1) {
       setShowLeaveMessage(true);
       setFeedbackTime(feedbackTime => feedbackTime - 1);
 
@@ -130,8 +130,8 @@ export default function SensorData({ navigation }) {
         <Text style={styles.timer}>{seconds}</Text>
       </View>
       {showLeaveMessage ? 
-      (<Text style={styles.text}>سيبي التليفون!!!</Text>)
-      : (<Text style={styles.text}>لو ماشتغلتيش دلوقتي هتشتغلي على اللاب في المواصلات</Text>)}
+      (<Text style={styles.text}>Leave your phone</Text>)
+      : (<Text style={styles.text}>Good Luck</Text>)}
     </View>
   );
 }
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 
     text: {
       fontSize: 30,
-      color: '#cce3f0',
+      color: 'white',
       fontWeight: 'bold',
       marginTop: '5%',
     },

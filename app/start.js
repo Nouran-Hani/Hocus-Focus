@@ -37,26 +37,29 @@ export default function Start({ route, navigation }) {
         }
         const intervalId = setInterval(() => {
             setTimeLeft(prevTime => prevTime - 1);
+            if(timeLeft % 10 == 1 && cameraRef){
+                handleCapture();
+            }
         }, 1000);
 
         return () => clearInterval(intervalId); // Cleanup interval on unmount or when timeLeft changes
     }, [timeLeft]);
 
-    useEffect(() => {
-        if (!cameraRef) {return;}
-        const intervalId = setInterval(() => {
-            if (cameraRef) { // Ensure cameraRef is set before capturing
-                handleCapture();
-                // console.log('cameraRef is on');
-            }
-        }, 10000); // Trigger every 10 seconds
+    // useEffect(() => {
+    //     if (!cameraRef) {return;}
+    //     const intervalId = setInterval(() => {
+    //         if (cameraRef) { // Ensure cameraRef is set before capturing
+    //             handleCapture();
+    //             // console.log('cameraRef is on');
+    //         }
+    //     }, 10000); // Trigger every 10 seconds
     
-        // Clean up interval on component unmount or when cameraRef changes
-        return () => {
-            clearInterval(intervalId);
-            // console.log('Interval cleared');
-        };
-    }, [cameraRef]); // Depend on cameraRef so it re-runs if cameraRef changes
+    //     // Clean up interval on component unmount or when cameraRef changes
+    //     return () => {
+    //         clearInterval(intervalId);
+    //         // console.log('Interval cleared');
+    //     };
+    // }, [cameraRef]); // Depend on cameraRef so it re-runs if cameraRef changes
 
     const handleCapture = async () => {
         if (cameraRef){
@@ -71,13 +74,13 @@ export default function Start({ route, navigation }) {
             });
     
             try {
-                const response = await axios.post('https://reqres.in/api/users', "formData", {
+                const response = await axios.post('nouran.great-eagle.net/video', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
-                console.log('done')
-                Alert.alert('done')
+                // console.log('done')
+                // Alert.alert('done')
                 setState(response.data.state);
                 setError("");
 
@@ -87,9 +90,11 @@ export default function Start({ route, navigation }) {
                 }
                 console.log(response.data.state)
             } catch (error) {
+
                 setError(error.message)
                 setState("")
                 console.log(error);
+                
                 if (error.message === "Network Error"){
                     Alert.alert("This feature needs internet connection")
                     navigation.navigate("welcome")
@@ -100,69 +105,6 @@ export default function Start({ route, navigation }) {
             console.log('Camera is not available or has been stopped.');
         }
     };
-    //     const handleCapture = async () => {
-    //         if (cameraRef) {
-    //           const photo = await cameraRef.takePictureAsync({ base64: true, quality: 0.5 });
-          
-    //           // Create a new FormData instance to hold the image data
-    //           const formData = new FormData();
-    //           formData.append('image', {
-    //             uri: photo.uri,
-    //             name: 'photo.jpg',
-    //             type: 'image/jpeg',
-    //           });
-          
-    //           // Create a new XMLHttpRequest instance
-    //           const xhr = new XMLHttpRequest();
-          
-    //           // Open a connection to the backend
-    //           xhr.open('POST', 'http://92.113.26.243:5001/video', true);
-          
-    //           // Set up the callback to handle the response
-    //           xhr.onreadystatechange = function () {
-    //             if (xhr.readyState === 4) {
-    //                 if (xhr.status === 200) {
-    //                     // Parse and handle the response
-    //                     const response = JSON.parse(xhr.responseText);
-    //                     setState(response.state);
-    //                     setError("");
-            
-    //                     if (response.state === "disengaged" || response.state === "absent") {
-    //                         setFeedbackTime(feedbackTime => feedbackTime - 10);
-    //                     }
-
-    //                 console.log(response.state);
-    //             } else {
-    //                 // Handle errors
-    //                 console.error('Error', xhr.statusText);
-    //                 setError(xhr.statusText);
-    //                 setState("");
-                
-    //                 if (xhr.status === 0) {
-    //                     Alert.alert("This feature needs internet connection");
-    //                     navigation.navigate("welcome");
-    //                 }
-    //             }
-    //         }
-    //     };
-          
-    //     // Set the request headers for multipart/form-data (optional for FormData)
-    //     // xhr.setRequestHeader('Content-Type', 'multipart/form-data'); // Automatically set for FormData
-        
-    //     // Handle error cases like network issues
-    //     xhr.onerror = function () {
-    //         setError("Network Error");
-    //         console.log('Network Error');
-    //         Alert.alert("This feature needs internet connection");
-    //         navigation.navigate("welcome");
-    //     };
-        
-    //     // Send the form data
-    //     xhr.send(formData);
-    //     } else {
-    //         console.log('Camera is not available or has been stopped.');
-    //     }
-    // };
 
     useEffect(() => {
         // Show the notification when the component mounts

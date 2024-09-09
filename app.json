@@ -4,11 +4,11 @@
     "slug": "HocusFocus",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo2.png",
+    "icon": "./assets/images/logo without name.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/logo2.png",
+      "image": "./assets/images/logo without name.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo2.png",
+        "foregroundImage": "./assets/images/logo without name.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["INTERNET"],
